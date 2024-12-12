@@ -13,4 +13,11 @@ client.on('qr', qr => {
     qrcode.generate(qr, {small: true});
 });
 
+client.on('message_create', message => {
+	if (message.body === 'oi') {
+		// send back "pong" to the chat the message was sent in
+		client.sendMessage(message.from, 'gay');
+	}
+});
+
 client.initialize();
