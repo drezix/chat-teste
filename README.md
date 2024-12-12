@@ -6,7 +6,7 @@
 ![Bitbucket open issues](https://img.shields.io/bitbucket/issues/drezix/chat-teste?style=for-the-badge)
 ![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/drezix/chat-teste?style=for-the-badge)
 
-<img src="chatbot.png" alt="Logo">
+<img src="./img/chatbot.png" alt="Logo">
 
 > Teste de bot no whatsapp
 
