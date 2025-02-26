@@ -18,6 +18,10 @@ client.on('message_create', message => {
 		// send back "pong" to the chat the message was sent in
 		client.sendMessage(message.from, 'gay');
 	}
+	if (message.body === 'ping') {
+		// send back "pong" to the chat the message was sent in
+		client.sendMessage(message.from, 'deixa acontecer naturalmente');
+	}
 });
 
 client.initialize();
