@@ -8,7 +8,7 @@
 
 <img src="./img/chatbot.png" alt="Logo">
 
-> Teste de bot no whatsapp
+> Teste de bot no Whatsapp
 
 ### Ajustes e melhorias
 
