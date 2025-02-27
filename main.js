@@ -20,7 +20,7 @@ let welcomeMsg = false;
 client.on('message', async (message) => {
 	if (message.from !== TEST_GROUP_ID) return; // Ignora mensagens de outros grupos
 	if (!welcomeMsg){
-		await client.sendMessage(message.from, 'Bem vindo a RCS ADVOCACIA, para te ajudar, escolha uma opção:\n 1 - Teste\n 0 - Voltar ao menu de opções');
+		await client.sendMessage(message.from, 'Bem vindo a RCS ADVOCACIA, para te ajudar, escolha uma opção:\n 1 - Teste\n 2 - Teste 2\n 0 - Voltar ao menu de opções');
 	}
 	welcomeMsg = true;
 });
@@ -30,8 +30,11 @@ client.on('message_create',message => {
 		client.sendMessage(message.from, 'Você escolheu a opção 1\n Digite 0 para voltar ao menu de opções');
 	}
 	if (message.body === '0') {
-	 	client.sendMessage(message.from, 'Escolha uma opção:\n 1 - Teste\n 0 - Voltar ao menu de opções');
+	 	client.sendMessage(message.from, 'Escolha uma opção:\n 1 - Teste\n 2 - Teste 2\n 0 - Voltar ao menu de opções');
 	}
+	if (message.body === '2') {
+		client.sendMessage(message.from, 'Você escolheu a opção 2\n Digite 0 para voltar ao menu de opções');
+   }
 });
 
 client.initialize();
