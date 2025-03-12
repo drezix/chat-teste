@@ -13,8 +13,8 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const {cpf, password} = req.body;
-    const user = await authServices.login(cpf, password);
-    return res.status(200).json(user);
+    const {user, token} = await authServices.login(cpf, password);
+    return res.status(200).json({user, token});
   } catch (error) {
     return res.status(500).json({ message: 'Error logging in', error: error.message });
 
