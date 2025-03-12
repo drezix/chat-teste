@@ -9,3 +9,14 @@ exports.register = async (req, res) => {
     return res.status(500).json({ message: 'Error registering user', error: error.message });
   }
 };
+
+exports.login = async (req, res) => {
+  try {
+    const {cpf, password} = req.body;
+    const user = await authServices.login(cpf, password);
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).json({ message: 'Error logging in', error: error.message });
+
+  }
+};
