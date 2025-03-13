@@ -22,5 +22,8 @@ exports.login = async (cpf, password) => {
   const isPasswordCorrect = await bcrypt.compare(password, user.password)
   if (!isPasswordCorrect) throw new Error('Senha incorreta');
 
-  return user;
+  const token = jwt.sign({ cpf: user.cpf, id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+  return {user, token};
 }
+
