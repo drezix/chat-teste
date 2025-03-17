@@ -6,12 +6,7 @@ const lawyerSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  cpf: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  rg: {
+  oab: {
     type: String,
     required: true,
     unique: true,
@@ -32,7 +27,7 @@ const lawyerSchema = new mongoose.Schema({
   },
   isAdmin: {
     type: Boolean,
-    default: false
+    default: true
   }
 })
 
