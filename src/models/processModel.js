@@ -9,12 +9,14 @@ const processSchema = new mongoose.Schema({
   client: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Client',
-    required: true
+    required: true,
+    unique: true
   },
   lawyer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Lawyer',
-    required: true
+    required: true,
+    unique: true
   },
   status: {
     type: String,
