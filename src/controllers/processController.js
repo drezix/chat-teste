@@ -2,11 +2,10 @@ const processService = require('../services/processServices');
 
 exports.insert = async (req, res) => {
   try {
-    const userId = req.userId;
-    const lawyerId = req.lawyerId;
-    const processData = {...req.body, userId, lawyerId};
+    const lawyerId = req.user.id;
+    const processData = {...req.body, lawyer: lawyerId};
 
-    const process = await processService.insert(processData);
+    const process = await processService.insertProcess(processData);
 
     return res.status(201).json(process);
   }
@@ -17,23 +16,22 @@ exports.insert = async (req, res) => {
 
 exports.get = async (req, res) => {
   try {
-    const clientId = req.clientId;
-    const processId = req.process.id;
+    const processId = req.params.id;
 
-    const process = await processService.get(clientId, processId);
+    const process = await processService.getProcess(processId);
 
     return res.status(200).json(process);
   }
   catch (error) {
     return res.status(500).json({ message: 'Error getting process', error: error.message });
-  }
+  } 
 }
 
 exports.delete = async (req, res) => {
   try {
-    const processId = req.process.id;
+    const processId = req.params.id;
 
-    const process = await processService.delete(processId);
+    const process = await processService.deleteProcess(processId);
 
     return res.status(200).json(process);
   }
