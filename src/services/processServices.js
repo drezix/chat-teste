@@ -1,7 +1,9 @@
 const Process = require('../models/processModel');
+const mongoose = require('mongoose');
 
-exports.insertProcess = async (processNumber, client, lawyer, status) => {
-  const existingProcess = Process.findOne({
+exports.insertProcess = async  (data) => {
+  const { processNumber, client, lawyer, status } = data;
+  const existingProcess = await Process.findOne({
     processNumber
   });
   if (existingProcess) {
@@ -17,14 +19,20 @@ exports.insertProcess = async (processNumber, client, lawyer, status) => {
   return await newProcess.save();
 }
 
-exports.getProcess = async (processNumber) => {
-  return await processProcess.findOne({ processNumber });
+exports.getProcess = async (processId) => {
+  if (!mongoose.Types.ObjectId.isValid(processId)) {
+    throw new Error('Invalid process ID');
+  }
+  return await Process.findById(processId);
 }
 
-exports.deleteProcess = async (processNumber) => {
-  const process = await Process.findOneAndDelete({
-    processNumber
-  });
+exports.deleteProcess = async (processId) => {
+  if (!mongoose.Types.ObjectId.isValid(processId)) {
+    throw new Error('Invalid process ID');
+  }
+  const process = await Process.findByIdAndDelete(
+    processId
+  );
 
   if (!process) {
     throw new Error('Process not found');

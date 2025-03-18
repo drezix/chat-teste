@@ -48,7 +48,7 @@ exports.login = async (oab, password) => {
   const isPasswordCorrect = await bcrypt.compare(password, lawyer.password)
   if (!isPasswordCorrect) throw new Error('Senha incorreta');
 
-  const token = jwt.sign({ oab: lawyer.oab, id: lawyer._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  const token = jwt.sign({ oab: lawyer.oab, id: lawyer._id, isAdmin: lawyer.isAdmin }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
   return {lawyer, token};
 }
