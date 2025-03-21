@@ -17,11 +17,11 @@ const App = () => {
         </ul>
       </nav>
       <Routes>
-        <Route path="/login" component={Login} />
-        <Route path="/register-client" component={ClientRegister} />
-        <Route path="/register-lawyer" component={LawyerRegister} />
-        <Route path="/process-manager" component={ProcessManager} />
-        <Route path="/" exact component={Login} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register-client" element={<ClientRegister />} />
+        <Route path="/register-lawyer" element={<LawyerRegister />} />
+        <Route path="/process-manager" element={<ProcessManager />} />
+        <Route path="/" element={<Login />} />
       </Routes>
     </Router>
   );

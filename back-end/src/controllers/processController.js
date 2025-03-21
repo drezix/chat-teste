@@ -16,9 +16,9 @@ exports.insert = async (req, res) => {
 
 exports.get = async (req, res) => {
   try {
-    const processId = req.params.id;
+    const processNumber = req.params.processNumber
 
-    const process = await processService.getProcess(processId);
+    const process = await processService.getProcess(processNumber);
 
     return res.status(200).json(process);
   }
@@ -29,9 +29,9 @@ exports.get = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const processId = req.params.id;
+    const processNumber = req.params.processNumber;
 
-    const process = await processService.deleteProcess(processId);
+    const process = await processService.deleteProcess(processNumber);
 
     return res.status(200).json(process);
   }

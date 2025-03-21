@@ -7,7 +7,7 @@ const router = express.Router();
 router.use(authMiddleware);
 
 router.post('/insert', lawyerMiddleware, processController.insert);
-router.get('/get/:id', processController.get);
-router.delete('/delete/:id',lawyerMiddleware, processController.delete);
+router.get('/get/:processNumber', processController.get);
+router.delete('/delete/:processNumber',lawyerMiddleware, processController.delete);
 
 module.exports = router;

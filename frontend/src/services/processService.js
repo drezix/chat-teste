@@ -5,12 +5,12 @@ export const insertProcess = async (processData) => {
   return response.data;
 };
 
-export const getProcess = async (id) => {
-  const response = await api.get(`/process/get/${id}`);
+export const getProcess = async (processNumber) => {
+  const response = await api.get(`/process/get/${processNumber}`);
   return response.data;
 };
 
-export const deleteProcess = async (id) => {
-  const response = await api.delete(`/process/delete/${id}`);
+export const deleteProcess = async (processNumber) => {
+  const response = await api.delete(`/process/delete/${processNumber}`);
   return response.data;
 };

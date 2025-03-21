@@ -19,19 +19,21 @@ exports.insertProcess = async  (data) => {
   return await newProcess.save();
 }
 
-exports.getProcess = async (processId) => {
-  if (!mongoose.Types.ObjectId.isValid(processId)) {
-    throw new Error('Invalid process ID');
+exports.getProcess = async (processNumber) => {
+  if (!processNumber) {
+    throw new Error('Invalid process number');
   }
-  return await Process.findById(processId);
+  return await Process.findOne({ processNumber });
 }
 
-exports.deleteProcess = async (processId) => {
-  if (!mongoose.Types.ObjectId.isValid(processId)) {
+exports.deleteProcess = async (processNumber) => {
+  if (!processNumber) {
     throw new Error('Invalid process ID');
   }
-  const process = await Process.findByIdAndDelete(
-    processId
+  const process = await Process.findOneAndDelete(
+    {
+      processNumber
+    }
   );
 
   if (!process) {
