@@ -4,7 +4,7 @@ import { loginClient, loginLawyer } from '../services/authService';
 const Login = () => {
   const [cpfOab, setCpfOab] = useState('');
   const [password, setPassword] = useState('');
-  const [userType, setUserType] = useState('client'); // 'client' ou 'lawyer'
+  const [userType, setUserType] = useState('client');
   const [error, setError] = useState(null);
 
   const handleLogin = async (e) => {
@@ -15,7 +15,6 @@ const Login = () => {
       } else {
         await loginLawyer(cpfOab, password);
       }
-      // Após o login, redirecione para a área de dashboard ou home
       window.location.href = '/dashboard';
     } catch (err) {
       setError(err.response?.data?.message || 'Erro no login');
@@ -23,10 +22,10 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Login - {userType === 'client' ? 'Cliente' : 'Advogado'}</h2>
       <form onSubmit={handleLogin}>
-        <div>
+        <div className="form-group">
           <label>{userType === 'client' ? 'CPF' : 'OAB'}:</label>
           <input 
             type="text" 
@@ -34,7 +33,7 @@ const Login = () => {
             onChange={(e) => setCpfOab(e.target.value)} 
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Senha:</label>
           <input 
             type="password" 
@@ -44,7 +43,7 @@ const Login = () => {
         </div>
         <button type="submit">Entrar</button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error">{error}</p>}
       <button onClick={() => setUserType(userType === 'client' ? 'lawyer' : 'client')}>
         Trocar para {userType === 'client' ? 'Advogado' : 'Cliente'}
       </button>

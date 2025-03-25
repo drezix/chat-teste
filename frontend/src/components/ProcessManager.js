@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { insertProcess, getProcess, deleteProcess } from '../services/processService';
 
 const ProcessManager = () => {
-  // Inserção do Processo
-  const [insertData, setInsertData] = useState({
+  // Dados para inserir um processo
+  const [processData, setProcessData] = useState({
     processNumber: '',
     client: '',
     lawyer: '',
@@ -11,92 +11,144 @@ const ProcessManager = () => {
   });
   const [insertMessage, setInsertMessage] = useState(null);
 
-  // Consulta do Processo
-  const [getId, setGetId] = useState('');
-  const [getResult, setGetResult] = useState(null);
-  const [getMessage, setGetMessage] = useState(null);
+  // Campos para buscar um processo
+  const [searchId, setSearchId] = useState('');
+  const [searchResult, setSearchResult] = useState(null);
+  const [searchMessage, setSearchMessage] = useState(null);
 
-  // Deleção do Processo
+  // Campos para deletar um processo
   const [deleteId, setDeleteId] = useState('');
   const [deleteMessage, setDeleteMessage] = useState(null);
 
-  // Handlers para inserção
   const handleInsertChange = (e) => {
-    setInsertData({ ...insertData, [e.target.name]: e.target.value });
+    setProcessData({ ...processData, [e.target.name]: e.target.value });
   };
 
   const handleInsertSubmit = async (e) => {
     e.preventDefault();
     try {
-      await insertProcess(insertData);
+      await insertProcess(processData);
       setInsertMessage('Processo inserido com sucesso!');
-    } catch (error) {
-      setInsertMessage(error.response?.data?.message || 'Erro ao inserir processo');
+    } catch (err) {
+      setInsertMessage(err.response?.data?.message || 'Erro ao inserir processo');
     }
   };
 
-  // Handlers para consulta
-  const handleGetSubmit = async (e) => {
+  const handleSearchSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await getProcess(getId);
-      setGetResult(data);
-      setGetMessage(null);
-    } catch (error) {
-      setGetMessage(error.response?.data?.message || 'Erro ao buscar processo');
-      setGetResult(null);
+      const data = await getProcess(searchId);
+      setSearchResult(data);
+      setSearchMessage(null);
+    } catch (err) {
+      setSearchMessage(err.response?.data?.message || 'Erro ao buscar processo');
+      setSearchResult(null);
     }
   };
 
-  // Handlers para deleção
   const handleDeleteSubmit = async (e) => {
     e.preventDefault();
     try {
       await deleteProcess(deleteId);
       setDeleteMessage('Processo deletado com sucesso!');
-    } catch (error) {
-      setDeleteMessage(error.response?.data?.message || 'Erro ao deletar processo');
+    } catch (err) {
+      setDeleteMessage(err.response?.data?.message || 'Erro ao deletar processo');
     }
   };
 
   return (
-    <div>
-      <h2>Gerenciamento de Processos</h2>
+    <div className="container">
+      <h2>Gerenciar Processos</h2>
 
+      {/* Inserir Processo */}
       <section>
         <h3>Inserir Processo</h3>
         <form onSubmit={handleInsertSubmit}>
-          <input type="text" name="processNumber" placeholder="Número do Processo" value={insertData.processNumber} onChange={handleInsertChange} required />
-          <input type="text" name="client" placeholder="ID do Cliente" value={insertData.client} onChange={handleInsertChange} required />
-          <input type="text" name="lawyer" placeholder="ID do Advogado" value={insertData.lawyer} onChange={handleInsertChange} required />
-          <input type="text" name="status" placeholder="Status" value={insertData.status} onChange={handleInsertChange} required />
-          <button type="submit">Inserir</button>
+          <div className="form-group">
+            <label>Número do Processo:</label>
+            <input 
+              type="text" 
+              name="processNumber" 
+              value={processData.processNumber} 
+              onChange={handleInsertChange} 
+              required 
+            />
+          </div>
+          <div className="form-group">
+            <label>ID do Cliente:</label>
+            <input 
+              type="text" 
+              name="client" 
+              value={processData.client} 
+              onChange={handleInsertChange} 
+              required 
+            />
+          </div>
+          <div className="form-group">
+            <label>ID do Advogado:</label>
+            <input 
+              type="text" 
+              name="lawyer" 
+              value={processData.lawyer} 
+              onChange={handleInsertChange} 
+              required 
+            />
+          </div>
+          <div className="form-group">
+            <label>Status:</label>
+            <input 
+              type="text" 
+              name="status" 
+              value={processData.status} 
+              onChange={handleInsertChange} 
+              required 
+            />
+          </div>
+          <button type="submit">Inserir Processo</button>
         </form>
-        {insertMessage && <p>{insertMessage}</p>}
+        {insertMessage && <p className="error">{insertMessage}</p>}
       </section>
 
+      {/* Buscar Processo */}
       <section>
         <h3>Buscar Processo</h3>
-        <form onSubmit={handleGetSubmit}>
-          <input type="text" placeholder="ID do Processo" value={getId} onChange={(e) => setGetId(e.target.value)} required />
+        <form onSubmit={handleSearchSubmit}>
+          <div className="form-group">
+            <label>ID do Processo:</label>
+            <input 
+              type="text" 
+              value={searchId} 
+              onChange={(e) => setSearchId(e.target.value)} 
+              required 
+            />
+          </div>
           <button type="submit">Buscar</button>
         </form>
-        {getMessage && <p>{getMessage}</p>}
-        {getResult && (
+        {searchMessage && <p className="error">{searchMessage}</p>}
+        {searchResult && (
           <div>
             <h4>Detalhes do Processo:</h4>
-            <pre>{JSON.stringify(getResult, null, 2)}</pre>
+            <pre>{JSON.stringify(searchResult, null, 2)}</pre>
           </div>
         )}
       </section>
 
+      {/* Deletar Processo */}
       <section>
         <h3>Deletar Processo</h3>
         <form onSubmit={handleDeleteSubmit}>
-          <input type="text" placeholder="ID do Processo" value={deleteId} onChange={(e) => setDeleteId(e.target.value)} required />
+          <div className="form-group">
+            <label>ID do Processo:</label>
+            <input 
+              type="text" 
+              value={deleteId} 
+              onChange={(e) => setDeleteId(e.target.value)} 
+              required 
+            />
+          </div>
           <button type="submit">Deletar</button>
         </form>
-        {deleteMessage && <p>{deleteMessage}</p>}
+        {deleteMessage && <p className="error">{deleteMessage}</p>}
       </section>
     </div>
   );

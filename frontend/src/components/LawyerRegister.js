@@ -7,7 +7,7 @@ const LawyerRegister = () => {
     oab: '',
     email: '',
     telefone: '',
-    password: '',
+    password: ''
   });
   const [message, setMessage] = useState(null);
 
@@ -20,23 +20,68 @@ const LawyerRegister = () => {
     try {
       await registerLawyer(formData);
       setMessage('Registro realizado com sucesso!');
-    } catch (error) {
-      setMessage(error.response?.data?.message || 'Erro no registro!');
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'Erro no registro!');
     }
   };
 
   return (
-    <div>
-      <h2>Registro de Advogado</h2>
+    <div className="container">
+      <h2>Registrar Advogado</h2>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Nome" value={formData.name} onChange={handleChange} required />
-        <input type="text" name="oab" placeholder="OAB" value={formData.oab} onChange={handleChange} required />
-        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
-        <input type="text" name="telefone" placeholder="Telefone" value={formData.telefone} onChange={handleChange} required />
-        <input type="password" name="password" placeholder="Senha" value={formData.password} onChange={handleChange} required />
+        <div className="form-group">
+          <label>Nome:</label>
+          <input 
+            type="text" 
+            name="name" 
+            value={formData.name} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
+        <div className="form-group">
+          <label>OAB:</label>
+          <input 
+            type="text" 
+            name="oab" 
+            value={formData.oab} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
+        <div className="form-group">
+          <label>Email:</label>
+          <input 
+            type="email" 
+            name="email" 
+            value={formData.email} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
+        <div className="form-group">
+          <label>Telefone:</label>
+          <input 
+            type="text" 
+            name="telefone" 
+            value={formData.telefone} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
+        <div className="form-group">
+          <label>Senha:</label>
+          <input 
+            type="password" 
+            name="password" 
+            value={formData.password} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
         <button type="submit">Registrar</button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p className="error">{message}</p>}
     </div>
   );
 };
