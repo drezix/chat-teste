@@ -11,6 +11,9 @@ const port = 3000;
 connectDB();
 
 app.use(cors()); // Habilita o CORS para todas as rotas
+app.use(cors({
+  origin: 'http://localhost:3001'  // atualize conforme necessário
+}));
 
 app.use(express.json());
 
