@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "concurrently \"npm run start:backend\" \"npx open-cli http://localhost:3001\"",
-    "start:backend": "nodemon backend/app.js",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start",
+    "start:whatsapp": "cd whatsapp && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
