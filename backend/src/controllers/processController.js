@@ -1,11 +1,16 @@
 const processService = require('../services/processServices');
+const redisClient = require('../config/redisConfig');
 
 exports.insert = async (req, res) => {
   try {
-    const lawyerId = req.user.id;
-    const processData = {...req.body, lawyer: lawyerId};
+    const clientCpf = req.body.clientCpf;
+    const lawyerOab = req.body.Oab;
+    const processData = {...req.body, client: clientCpf, lawyer: lawyerOab};
 
     const process = await processService.insertProcess(processData);
+
+    const cacheKey = `processes:${process}`;
+    await redisClient.del(cacheKey);
 
     return res.status(201).json(process);
   }
@@ -17,8 +22,18 @@ exports.insert = async (req, res) => {
 exports.get = async (req, res) => {
   try {
     const processNumber = req.params.processNumber
+    const cacheKey = `processes:${processNumber}`;
+
+    const cachedProcesses = await redisClient.get(cacheKey);
+    if (cachedProcesses) {
+      console.log('Retornando processos  do cache');
+      return res.status(200).json(JSON.parse(cachedProcesses));
+    }
 
     const process = await processService.getProcess(processNumber);
+
+    await redisClient.set(cacheKey, JSON.stringify(process), { EX: 3600 });
+        console.log('Retornando processos  do banco e armazenando no cache');
 
     return res.status(200).json(process);
   }
@@ -32,6 +47,9 @@ exports.delete = async (req, res) => {
     const processNumber = req.params.processNumber;
 
     const process = await processService.deleteProcess(processNumber);
+
+    const cacheKey = `processes:${processNumber}`;
+        await redisClient.del(cacheKey);
 
     return res.status(200).json(process);
   }

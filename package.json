@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
-    "start:backend": "cd backend && npm start",
-    "start:frontend": "cd frontend && npm start",
+    "start": "concurrently \"npm run start:backend\" \"npx open-cli https://rcsadvocacia.local:8443\"",
+    "start:backend": "nodemon -e js backend/src/bin/www",
     "start:whatsapp": "cd whatsapp && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,8 +12,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.1.9",
     "concurrently": "^9.1.2",
+    "nodemon": "^3.1.9",
     "open-cli": "^8.0.0"
   }
 }
